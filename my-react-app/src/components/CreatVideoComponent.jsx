@@ -182,8 +182,7 @@ class CreatVideoComponents extends Component {
                         </div>
 
                 </div> */}
-                HI
-{this.props.match.params.id}
+
             </div>
         );
     }

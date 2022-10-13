@@ -14,6 +14,7 @@ import history  from './history';
 const Routing = () => {
 
       return (<Router history={history}>
+        <div className='container'>
         <Switch>
             <Route path = "/" exact component = {ListVideosComponent}/> 
             <Route path = "/videos"  component =  {ListVideosComponent}/>     
@@ -21,11 +22,10 @@ const Routing = () => {
             <Route path = "/vew-video/:id" component =  {ViewVideoComponent}/> 
             <Route path = "/update-video/:id" component =  {UpdateVideoComponent}/>  
             </Switch>
-      
+            </div>
     </Router>
 );
 }
-
 
 const rootelement = document.getElementById('root');
 const root = createRoot(rootelement)
