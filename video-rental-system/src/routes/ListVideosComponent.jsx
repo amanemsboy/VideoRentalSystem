@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import VideoService from '../services/VideoService';
-import HeaderComponent from './HeaderComponent';
-
-import {withRouter, Link} from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 class ListVideosComponent extends Component {
-
 
     constructor (props) {
         super(props)
@@ -58,11 +55,6 @@ class ListVideosComponent extends Component {
       render() {
    
         return (
-            <>
-
-            <HeaderComponent />
-
-
             <div>
 
                 <h2 className="text-center"> Employees List</h2>
@@ -127,9 +119,8 @@ class ListVideosComponent extends Component {
                 </div>
 
             </div>
-            </>
         );
     }
 }
 
-export default withRouter(ListVideosComponent);
+export default ListVideosComponent;
