@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import VideoService from '../services/VideoService';
-import {Link} from "react-router-dom";
+import HeaderComponent from './HeaderComponent';
+
+import {withRouter, Link} from "react-router-dom";
 
 class ListVideosComponent extends Component {
+
 
     constructor (props) {
         super(props)
@@ -45,7 +48,8 @@ class ListVideosComponent extends Component {
        }
 
       addVideo() {
-        this.props.history.push(`/add-video`);
+        console.log("props", this.props)
+        this.props.history.push(`/add-video/1`);
        }
     
        
@@ -59,7 +63,7 @@ class ListVideosComponent extends Component {
                 <h2 className="text-center"> Employees List</h2>
 
                  <div className = "column">
-                    <Link to={'add-video/'} >Add</Link>
+                    <Link to={'add-video/1'} >Add</Link>
                      <button className='btn btn-primary' onClick={this.addVideo}> Add Videos </button>
                     
                  </div>
@@ -122,4 +126,4 @@ class ListVideosComponent extends Component {
     }
 }
 
-export default ListVideosComponent;
+export default withRouter(ListVideosComponent);

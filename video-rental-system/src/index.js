@@ -16,9 +16,6 @@ import ListVideosComponent from "./routes/ListVideosComponent";
 import ViewVideoComponent from "./routes/ViewVideoComponent";
 import UpdateVideoComponent from "./routes/UpdateVideoComponent";
 
-import './App.css';
-import './index.css';
-
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
@@ -28,8 +25,7 @@ root.render(
             <div className="container">
                 <Routes>
                     <Route path = "/" exact element={<ListVideosComponent />} />
-                    <Route path = "/videos" element={<ListVideosComponent />} />
-                    <Route path = "/add-video/:id" element={<CreatVideoComponents />} />
+                    <Route path = "/add-video/" element={<CreatVideoComponents />} />
                     <Route path = "/view-video/:id" element={<ViewVideoComponent />}/>
                     <Route path = "/update-video/:id" element={<UpdateVideoComponent />}/>
                 </Routes>
