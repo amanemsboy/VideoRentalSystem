@@ -1,90 +1,37 @@
-import React, { Component } from 'react';
+// import React, {useState} from 'react';
+import React, { useState } from 'react';
 import VideoService from '../services/VideoService';
+import { useNavigate } from "react-router-dom";
+import swal from 'sweetalert2';
+import axios from 'axios';
 
-class UpdateVideoComponent extends Component {
-    constructor(props) {
-        super(props)
+const UpdateVideoComponent = (props) => {
+    let navigate = useNavigate();
+    const [ videosLanguage, setVideoLanguage] = useState('');
+    const [ videosPrice, setVideoPrice] = useState('');
+    const [ videosTitle, setVideoTitle] = useState('');
+    const [ videosGener, setVideoGener] = useState('');
+    const [ videosYear, setVideoYear] = useState('');
 
-        this.state = {
+    const updateVideo = (e) => {
+    e.preventDefault();
+    let video = {
+    language: videosLanguage,
+    price: parseFloat(videosPrice),
+    title: videosTitle,
+    genre: videosGener,
+    year: videosYear
+    };
+    VideoService.updateVideo(video).then(res => {
+    navigate('/')
+    });
+    }
 
-       id: this.props.match.params.id,
-       videosLanguage: '',
-       videosPrice: '',
-       videosTitle: '',
-       videosGener: '',
-       videosYear: ''
-
-        }
-
-        this.changevideosLanguageHandler = this.changevideosLanguageHandler.bind(this);
-        this.changevideosPriceHandler =  this.changevideosPriceHandler.bind(this);
-        this.changevideoTitleHandler = this.changevideoTitleHandler.bind(this);
-        this.changevideosGenerHandler = this.changevideosGenerHandler.bind(this);
-        this.changevideosYearHandler = this.changevideosYearHandler.bind(this);
-        this.updateVideo = this.updateVideo.bind(this);
+    const cancel = (e) => {
+    e.preventDefault();
+    navigate('/')
     
     }
-
-
-   componentDidMount() {
-    VideoService.getVideoById(this.state.id).then((res) => {
-        let video = res.data;
-        this.setState({videosLanguage: video.videosLanguage,
-        videosTitle: video.videosTitle,
-        videosGener: video.videosGener,
-        videosPrice: video.videosPrice,
-        videosYear:  video.videosYear
-    });
-   });
-}
-
-    updateVideo = (e) => {
-    e.preventDefault();
-
-    let video = {videosLanguage: this.state.videosLanguage, videosPrice: this.state.videosPrice, videosTitle: this.state.videosTitle,
-    videosGener: this.state.videosGener, videosYear: this.state.videosYear };
-    console.log('videos =>' + JSON.stringify(video));
-    VideoService.updateVideo(video, this.state.id).then(res => {
-        this.props.history.push('/videos')
-    });
-
-   }
-
-
-
-    changevideosLanguageHandler = (event) => {
-
-        this.setState({videosLanguage: event.target.value})
-    }
-
-    changevideosPriceHandler = (event) => {
-
-        this.setState({videosPrice: event.target.value})
-    }
-
-    changevideoTitleHandler = (event) => {
-
-        this.setState({videosTitle: event.target.value})
-    }
-
-    changevideosGenerHandler = (event) => {
-
-        this.setState({videosGener: event.target.value})
-    }
-
-    changevideosYearHandler = (event) => {
-
-        this.setState({videosYear: event.target.value})
-
-    }
-
-    cancel () {
-
-        this.props.history.oush('/videos');
-
-    }
-
-    render() {
         return (
             <div>
                 
@@ -93,7 +40,7 @@ class UpdateVideoComponent extends Component {
 
                             <div className='card col-md-6 offset-md-3 offset-md-3'>
 
-                                <h3 className='text-center'> Add video </h3>
+                                <h3 className='text-center'> Update video </h3>
                                 <div className='card-body'>
 
                                         <form> 
@@ -101,49 +48,45 @@ class UpdateVideoComponent extends Component {
                                             <div className='form-group'>
 
                                                 <label> Videos Language </label>
-                                                <input placeholder=" Videos Language" name=' videosLanguage' className='form-control'
-                                                 value={this.state.videosLanguage} onChange = {this.changevideosLanguageHandler} />
+                                                <input placeholder="Videos Language" name='videosLanguage' className='form-control'
+                                                 value={videosLanguage} onChange = {(e) => setVideoLanguage(e.target.value)} />
                                             </div>
 
                                             
                                             <div className='form-group'>
 
                                                 <label> Videos Price </label>
-                                                <input placeholder="Videos Price" name=' videosPrice' className='form-control'
-                                                 value={this.state.videosPrice} onChange = {this.changevideosPriceHandler} />
+                                                <input placeholder="Videos Price" name='videosPrice' className='form-control' type={'number'}
+                                                 value={videosPrice} onChange = {(e) => setVideoPrice(e.target.value)} />
                                             </div>
-
-
 
 
                                             <div className='form-group'>
 
-                                                <label> videosTitle </label>
-                                                <input placeholder=" videos Title" name=' videosTitle' className='form-control'
-                                                 value={this.state.videosTitle} onChange = {this.changevideosTitleHandler} />
+                                                <label> Videos Title </label>
+                                                <input placeholder="videos Title" name='videosTitle' className='form-control'
+                                                 value={videosTitle} onChange = {(e) => setVideoTitle(e.target.value)}  />
                                             </div>
 
 
                                               <div className='form-group'>
 
-                                                <label> videosGener </label>
-                                                <input placeholder="videos Gener" name=' videosGener' className='form-control'
-                                                 value={this.state.videosGener} onChange = {this.changevideosGenerHandler} />
+                                                <label> Videos Genre </label>
+                                                <input placeholder="videos Gener" name='videosGenre' className='form-control'
+                                                 value={videosGener} onChange = {(e) => setVideoGener(e.target.value)}  />
                                             </div>
 
 
                                               <div className='form-group'>
 
-                                                <label> videosYear </label>
-                                                <input placeholder=" videos Year" name=' videosYear' className='form-control'
-                                                 value={this.state.videosYear} onChange = {this.changevideosYearHandler} />
+                                                <label> Videos Year </label>
+                                                <input placeholder="videos Year" name='videosYear' className='form-control' type={'date'}
+                                                 value={videosYear} onChange = {(e) => setVideoYear(e.target.value)} />
                                             </div>
 
+                                          <button className='btn btn-success' onClick = {(e) => updateVideo(e)} > Update </button>                                        
+                                          <button className='btn btn-danger' style = {{marginLeft: "10px"}} onClick={(e) => cancel(e)} > Cancel </button>
 
-
-                                          <button className='btn btn-success' onClick={this.updateVideo}> Save </button>
-                                          <button className='btn btn-danger' onClick={this.cancel.bind(this)} style = {{marginLeft: "10px"}}> Save </button>
- 
                                         </form>
 
                                 </div>
@@ -156,7 +99,7 @@ class UpdateVideoComponent extends Component {
 
             </div>
         );
-    }
+    
 }
 
 export default UpdateVideoComponent;

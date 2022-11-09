@@ -2,6 +2,13 @@ import React, {useState} from 'react';
 import VideoService from '../services/VideoService';
 import { useNavigate } from "react-router-dom";
 
+import Creat from '../css/Creat.css';
+import { Button } from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import swal from 'sweetalert';
+
+
+
 const CreatVideoComponents = (props) => {
     let navigate = useNavigate();
     const [ videosLanguage, setVideoLanguage] = useState('');
@@ -21,6 +28,12 @@ const CreatVideoComponents = (props) => {
         };
         VideoService.creatVideo(video).then(res => {
             navigate('/')
+            swal({
+                title: "Movie add successfully !",
+                text: res.data.message,
+                icon: "success",
+                button: "Okay",
+              });
         });
     }
 
@@ -41,30 +54,30 @@ const CreatVideoComponents = (props) => {
                                 <div className='form-group'>
 
                                     <label> Videos Language </label>
-                                    <input placeholder=" Videos Language" name=' videosLanguage' className='form-control'
+                                    <input placeholder=" Videos Language" name=' videosLanguage' className='form-control' required
                                            value={videosLanguage} onChange = {(e) => setVideoLanguage(e.target.value)} />
                                 </div>
-                                <div className='form-group'>
 
+                                <div className='form-group'>
                                     <label> Videos Price </label>
-                                    <input placeholder="Videos Price" name=' videosPrice' className='form-control' type={"number"}
+                                    <input placeholder="Videos Price" name=' videosPrice' className='form-control' type={"number"} required
                                            value={videosPrice} onChange = {(e) => setVideoPrice(e.target.value)} />
                                 </div>
                                 <div className='form-group'>
                                     <label> videos Title </label>
-                                    <input placeholder=" videos Title" name=' videosTitle' className='form-control'
+                                    <input placeholder=" videos Title" name=' videosTitle' className='form-control' required
                                            value={videosTitle} onChange = {(e) => setVideoTitle(e.target.value)} />
                                 </div>
                                 <div className='form-group'>
 
                                     <label> Video Gener </label>
-                                    <input placeholder="videos Gener" name='videosGener' className='form-control'
+                                    <input placeholder="videos Gener" name='videosGener' className='form-control' required
                                            value={videosGener} onChange = {(e) => setVideoGener(e.target.value)} />
                                 </div>
                                 <div className='form-group'>
 
                                     <label> Videos Year </label>
-                                    <input placeholder=" videos Year" name='videosYear' className='form-control' type={"date"}
+                                    <input placeholder=" videos Year" name='videosYear' className='form-control' type={"date"} required
                                            value={videosYear} onChange = {(e) => setVideoYear(e.target.value)} />
                                 </div>
                                 <button className='btn btn-success' onClick={(e) => saveVideos(e)} > Save </button>

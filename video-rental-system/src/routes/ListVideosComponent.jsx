@@ -1,8 +1,41 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import VideoService from '../services/VideoService';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+// import ListVideoComponent from '../css/ListVideoComponent.css';
+import VideoComponent from '../css/VideoComponent.css'; 
+import axios from 'axios';
+import swal from 'sweetalert2';
+
+// const ListVideosComponent = (props) => {
+
+//     let navigate = useNavigate();
+
+//     const [addVideo, setAddvideo] = useState('');
+//     const [editVideo, setEditVideo] = useState('');
+//     const [deleteVideos, setDeletVideos] = useState('');
+
+    // const deleteVideo = (e, id) => {
+    //     e.preventDefault();
+
+    //     const thisClicked = e.currentTarget;
+    //     thisClicked.innerText = "Delting";
+
+    //     axios.delete(`/api/delete-category/${id}`).then(res=>{
+    //             if(res.data.status === 200) 
+    //             {
+    //                 swal("success",res.data.message,"success");
+    //                 thisClicked.closest("tr").remove();
+    //             }
+    //             else if(res.data.message,"success");
+    //             thisClicked.innerText = "Delete";
+    //     });
+     
+    // }
+
 
 class ListVideosComponent extends Component {
+
+    
 
     constructor (props) {
         super(props)
@@ -10,7 +43,6 @@ class ListVideosComponent extends Component {
         this.state = {
 
             videos: []
-
         
         }
 
@@ -19,7 +51,7 @@ class ListVideosComponent extends Component {
         this.deleteVideo = this.deleteVideo.bind(this)
         }
 
-        deleteVideo(id) {
+        deleteVideo (id) {
             //rest api 
             VideoService.deleteVideo(id).then(res => {
                 this.setState({videos: this.state.videos.filter(video => video.id !==id)}); 
@@ -32,7 +64,7 @@ class ListVideosComponent extends Component {
             this.props.history.push(`/view-videos/${id}`);
         }
 
-        editVideo(id) {
+        editVideo (id) {
         this.props.history.push(`/update-video/${id}`); 
 
        }
@@ -47,20 +79,20 @@ class ListVideosComponent extends Component {
       addVideo() {
         this.props.history.push(`/add-video`);
        }
-    
        
-
- 
       render() {
-   
+
+
         return (
             <div>
 
-                <h2 className="text-center"> Employees List</h2>
+                <h2 className="text-center"> Movies List</h2>
 
                  <div className = "column">
-                    <Link to={'add-video/'} >Add</Link>
-                     <button className='btn btn-primary' onClick={this.addVideo}> Add Videos </button>
+                    {/* <Link to={'add-video/'} >Add</Link>
+                     <button className='btn btn-primary' onClick={this.addVideo}> Add Videos </button> */}
+
+                     <button> <Link className='add-video' to={'add-video/'} > Add Videos </Link> </button>
                     
                  </div>
                  <br></br>
@@ -72,11 +104,11 @@ class ListVideosComponent extends Component {
                             <thead>
 
                                 <tr> 
-
+                          
                                     <th> Videos Language </th>
                                     <th> Videos Price </th>
                                     <th> Videos Title </th>
-                                    <th> Videos Gener </th>
+                                    <th> Videos Genre </th>
                                     <th> Videos Year </th>
                                     <th> Actions </th>
 
@@ -91,7 +123,7 @@ class ListVideosComponent extends Component {
                                             this.state.videos.map(
                                                 video => 
                                                 <tr key = {video.id}>
-
+                                        
                                                     <td> { video.language} </td>
                                                     <td> { video.price} </td>
                                                     <td> { video.title} </td>
@@ -99,9 +131,19 @@ class ListVideosComponent extends Component {
                                                     <td> { video.year} </td>
 
                                                     <td>
-                                                        <button onClick={() => this.editVideo(video.id)} className= "btn btn-info" style={{marginLeft: "30px"}}> Update </button>
-                                                        <button style={{marginLeft: "30px"}} onClick={ () => this.deleteVideo(video.id)} className="btn btn-danger"> Delete </button>
-                                                        <button style={{marginLeft: "30px"}} onClick={ () => this.viewVideos(video.id)} className="btn btn-info"> View </button>
+
+                                                        <div className='function-buttons'>
+
+                                                        {/* <button onClick={() => this.editVideo(video.id)} className= "btn btn-info" style={{marginLeft: "30px"}}> Update </button> */}
+                                                        <button> <Link className='update' to={'update-video/:id'}>  Update</Link> </button>
+
+                                                        {/* <button className="btn btn-danger" onClick = {(e) => deleteVideo(e, video.id)} > Delete </button> */}
+                                                        <button> <Link className='delete' to={'deleteVideos'}>  Delete </Link> </button>
+
+                                                        {/* <button style={{marginLeft: "30px"}} onClick={ () => this.viewVideos(video.id)} className="btn btn-info"> View </button> */}
+                                                        <button> <Link className='view' to={'viewVideos'}>  View </Link> </button>
+                                              
+                                                        </div>
 
                                                     </td>
 
@@ -112,8 +154,7 @@ class ListVideosComponent extends Component {
 
                                 </tbody>
 
-                    </table>
-
+                    </table>                              
 
                 </div>
 

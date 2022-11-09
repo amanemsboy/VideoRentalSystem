@@ -22,7 +22,7 @@ class VideoService {
     }
 
     deleteVideo(video, videoId) {
-        return axios.delete(VIDEO_API_BASE_URL + '/' + videoId)
+        return axios.delete(VIDEO_API_BASE_URL + '/' + videoId, video)
     }
 }
 

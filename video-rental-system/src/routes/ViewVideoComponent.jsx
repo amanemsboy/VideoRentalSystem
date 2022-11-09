@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import VideoService from '../services/VideoService';
+
+
+// const ViewVideoComponent = (props) => {
+//     let navigate = useNavigate();
+    
+// }
+
 
 class ViewVideoComponent extends Component {
 
@@ -25,7 +33,6 @@ class ViewVideoComponent extends Component {
                 )
     
         }
-    
     
         render() {
             return (
