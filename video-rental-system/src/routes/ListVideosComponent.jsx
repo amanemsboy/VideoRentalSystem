@@ -54,7 +54,7 @@ class ListVideosComponent extends Component {
         deleteVideo (id) {
             //rest api 
             VideoService.deleteVideo(id).then(res => {
-                this.setState({videos: this.state.videos.filter(video => video.id !==id)}); 
+                this.setState({videos: this.state.videos.filter(video => video.video_Id !==id)}); 
             })
  
         }
@@ -72,6 +72,15 @@ class ListVideosComponent extends Component {
        componentDidMount () {
        
         VideoService.getVideos().then((res) => {
+            console.log("videos", res.data);
+            this.setState({videos: res.data});
+        } );
+       }
+
+       componentDidUpdate () {
+       
+        VideoService.getVideos().then((res) => {
+            console.log("videos", res.data);
             this.setState({videos: res.data});
         } );
        }
@@ -79,10 +88,16 @@ class ListVideosComponent extends Component {
       addVideo() {
         this.props.history.push(`/add-video`);
        }
+
+    deleteVideo = (e,vid, id) => {
+        e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Delting";
+        VideoService.deleteVideo(vid, id).then(res => thisClicked.innerText = "Delete")
+    }
+
        
       render() {
-
-
         return (
             <div>
 
@@ -92,7 +107,7 @@ class ListVideosComponent extends Component {
                     {/* <Link to={'add-video/'} >Add</Link>
                      <button className='btn btn-primary' onClick={this.addVideo}> Add Videos </button> */}
 
-                     <button> <Link className='add-video' to={'add-video/'} > Add Videos </Link> </button>
+                     <button> <Link className='add-video' to={'/add-video/'} > Add Videos </Link> </button>
                     
                  </div>
                  <br></br>
@@ -120,9 +135,9 @@ class ListVideosComponent extends Component {
 
                                         {
 
-                                            this.state.videos.map(
+                                            [...this.state.videos].sort((a, b) => a.video_Id - b.video_Id).map(
                                                 video => 
-                                                <tr key = {video.id}>
+                                                <tr key = {video.video_Id}>
                                         
                                                     <td> { video.language} </td>
                                                     <td> { video.price} </td>
@@ -135,10 +150,10 @@ class ListVideosComponent extends Component {
                                                         <div className='function-buttons'>
 
                                                         {/* <button onClick={() => this.editVideo(video.id)} className= "btn btn-info" style={{marginLeft: "30px"}}> Update </button> */}
-                                                        <button> <Link className='update' to={'update-video/:id'}>  Update</Link> </button>
+                                                        <button> <Link className='update' to={'/update-video/' + video.video_Id } state={{video: video}}>  Update</Link> </button>
 
-                                                        {/* <button className="btn btn-danger" onClick = {(e) => deleteVideo(e, video.id)} > Delete </button> */}
-                                                        <button> <Link className='delete' to={'deleteVideos'}>  Delete </Link> </button>
+                                                        <button className="btn btn-danger" onClick = {(e) => this.deleteVideo(e, video, video.video_Id)} > Delete </button>
+                                                        {/* <button> <Link className='delete' to={'deleteVideos/'}>  Delete </Link> </button> */}
 
                                                         {/* <button style={{marginLeft: "30px"}} onClick={ () => this.viewVideos(video.id)} className="btn btn-info"> View </button> */}
                                                         <button> <Link className='view' to={'viewVideos'}>  View </Link> </button>

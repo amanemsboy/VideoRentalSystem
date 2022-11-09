@@ -1,29 +1,31 @@
 // import React, {useState} from 'react';
 import React, { useState } from 'react';
 import VideoService from '../services/VideoService';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import swal from 'sweetalert2';
 import axios from 'axios';
 
 const UpdateVideoComponent = (props) => {
+    const location = useLocation();
+    const {video} = location.state;
     let navigate = useNavigate();
-    const [ videosLanguage, setVideoLanguage] = useState('');
-    const [ videosPrice, setVideoPrice] = useState('');
-    const [ videosTitle, setVideoTitle] = useState('');
-    const [ videosGener, setVideoGener] = useState('');
-    const [ videosYear, setVideoYear] = useState('');
+    const [ videosLanguage, setVideoLanguage] = useState(video.language);
+    const [ videosPrice, setVideoPrice] = useState(video.price);
+    const [ videosTitle, setVideoTitle] = useState(video.title);
+    const [ videosGener, setVideoGener] = useState(video.genre);
+    const [ videosYear, setVideoYear] = useState(video.year);
 
     const updateVideo = (e) => {
-    e.preventDefault();
-    let video = {
-    language: videosLanguage,
-    price: parseFloat(videosPrice),
-    title: videosTitle,
-    genre: videosGener,
-    year: videosYear
-    };
-    VideoService.updateVideo(video).then(res => {
-    navigate('/')
+        e.preventDefault();
+        let v = {
+        language: videosLanguage,
+        price: parseFloat(videosPrice),
+        title: videosTitle,
+        genre: videosGener,
+        year: videosYear,
+        };
+        VideoService.updateVideo(v, video.video_Id).then(res => {
+        navigate('/movies')
     });
     }
 

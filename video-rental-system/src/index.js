@@ -71,7 +71,7 @@ root.render(
             
                             {/* Movies Routing */}
                             
-                    {/* <Route path = "/" exact element={<ListVideosComponent />} /> */}
+                    <Route path = "/movies" exact element={<ListVideosComponent />} />
                     <Route path = "/add-video/" element={<CreatVideoComponents />} />
                     <Route path = "/view-video/:id" element={<ViewVideoComponent />}/>
                     <Route path = "/update-video/:id" element={<UpdateVideoComponent />}/>
@@ -89,17 +89,12 @@ root.render(
                     <Route path = "/update-rental/:id" element={<UpdateRentalComponent />} />
                     <Route path = "/add-rental" element={<CreatRentalComponent />} />
                     <Route path = "/view-rental/:id" element={<ViewRentalComponent/>}/>
-                    
                         
                     <Route path=  "*" exact element={<NoMatch />}/>
-
-                    <Route path='/:category/search/:keyword'element={Catalog} />
- 
-                    <Route path='/:category/:id' element={Detail} />
-
-                    <Route path='/:category' element={Catalog} />
-
-                    <Route path='/' exact  element={Home}  />
+                    <Route path='/:category/search/:keyword'element={<Catalog />} />
+                    <Route path='/:category/:id' element={<Detail />} />
+                    <Route path='/:category' element={<Catalog />} />
+                    <Route path='/' exact  element={<Home />}  />
                 
                 </Routes>
 

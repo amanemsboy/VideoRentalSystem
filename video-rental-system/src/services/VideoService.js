@@ -18,11 +18,11 @@ class VideoService {
     }
     
     updateVideo(video, videoId) {
-        return axios.put(VIDEO_API_BASE_URL + '/' + videoId, video)
+        return axios.put(VIDEO_API_BASE_URL  + videoId, video)
     }
 
     deleteVideo(video, videoId) {
-        return axios.delete(VIDEO_API_BASE_URL + '/' + videoId, video)
+        return axios.delete(VIDEO_API_BASE_URL + videoId, video)
     }
 }
 

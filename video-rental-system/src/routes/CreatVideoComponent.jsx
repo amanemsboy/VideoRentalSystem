@@ -27,7 +27,7 @@ const CreatVideoComponents = (props) => {
             year: videosYear
         };
         VideoService.creatVideo(video).then(res => {
-            navigate('/')
+            navigate('/movies')
             swal({
                 title: "Movie add successfully !",
                 text: res.data.message,
@@ -39,7 +39,7 @@ const CreatVideoComponents = (props) => {
 
     const cancel = (e) => {
         e.preventDefault();
-       navigate('/')
+       navigate('/movies')
     }
 
     return (
